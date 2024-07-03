@@ -1,0 +1,40 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  firstName String   @map("first_name")
+  lastName  String   @map("last_name")
+  email     String   @unique
+  password  String
+  parts     Parts[]
+}
+
+model Parts {
+  id             Int     @id @default(autoincrement())
+  name           String
+  age            Int?
+  gender         String?
+  language       String?
+  role           String?
+  purpose        String?
+  phobia         String?
+  belief         String?
+  triggers       String?
+  formationStory String? @map("formation_story")
+  behaviours     String?
+  feelings       String?
+  sensations     String?
+  thoughts       String?
+  exit           String?
+  userId         Int     @map("user_id")
+  user           User    @relation(fields: [userId], references: [id])
+
+  @@map("Parts")
+}
